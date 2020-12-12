@@ -9,6 +9,7 @@ import { SilenceFormStore } from "Stores/SilenceFormStore";
 import FilteringLabel from "Components/Labels/FilteringLabel";
 import { RenderNonLinkAnnotation, RenderLinkAnnotation } from "../Annotation";
 import { RenderSilence } from "../Silences";
+import { Settings } from "Stores/Settings";
 
 const GroupFooter: FC<{
   group: APIAlertGroupT;
@@ -18,6 +19,7 @@ const GroupFooter: FC<{
   silenceFormStore: SilenceFormStore;
   showAnnotations?: boolean;
   showSilences?: boolean;
+  settingsStore: Settings;
 }> = ({
   group,
   alertmanagers,
@@ -26,6 +28,7 @@ const GroupFooter: FC<{
   silenceFormStore,
   showAnnotations = true,
   showSilences = true,
+  settingsStore,
 }) => {
   return (
     <div className="card-footer components-grid-alertgrid-alertgroup-footer px-2 py-1">
@@ -50,6 +53,7 @@ const GroupFooter: FC<{
           name={name}
           value={value}
           alertStore={alertStore}
+          settingsStore={settingsStore}
         />
       ))}
       {alertmanagers.map((cluster) => (
@@ -58,6 +62,7 @@ const GroupFooter: FC<{
           name={StaticLabels.AlertmanagerCluster}
           value={cluster}
           alertStore={alertStore}
+          settingsStore={settingsStore}
         />
       ))}
       {alertStore.data.receivers.length > 1 ? (
@@ -65,6 +70,7 @@ const GroupFooter: FC<{
           name={StaticLabels.Receiver}
           value={group.receiver}
           alertStore={alertStore}
+          settingsStore={settingsStore}
         />
       ) : null}
       {showAnnotations
@@ -89,6 +95,7 @@ const GroupFooter: FC<{
                 afterUpdate={afterUpdate}
                 cluster={cluster}
                 silenceID={silenceID}
+                settingsStore={settingsStore}
               />
             ))
           )}

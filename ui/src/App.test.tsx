@@ -22,6 +22,7 @@ const uiDefaults: UIDefaults = {
   Animations: true,
   MultiGridLabel: "cluster",
   MultiGridSortReverse: false,
+  LabelHidingModKey: "altKey",
 };
 
 beforeEach(() => {

@@ -198,6 +198,7 @@ const AlertGroup: FC<{
           themedCounters={themedCounters}
           setIsMenuOpen={setIsMenuOpen}
           gridLabelValue={gridLabelValue}
+          settingsStore={settingsStore}
         />
         {isCollapsed ? null : (
           <div className="card-body px-2 py-1 components-grid-alertgrid-card">
@@ -221,6 +222,7 @@ const AlertGroup: FC<{
                     alertStore={alertStore}
                     silenceFormStore={silenceFormStore}
                     setIsMenuOpen={setIsMenuOpen}
+                    settingsStore={settingsStore}
                   />
                 ))}
               {group.alerts.length > defaultRenderCount ? (
@@ -268,6 +270,7 @@ const AlertGroup: FC<{
             silenceFormStore={silenceFormStore}
             showAnnotations={!alertStore.ui.isIdle}
             showSilences={!alertStore.ui.isIdle}
+            settingsStore={settingsStore}
           />
         ) : null}
       </div>

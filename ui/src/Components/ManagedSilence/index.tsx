@@ -5,6 +5,7 @@ import { AlertStore } from "Stores/AlertStore";
 import { SilenceFormStore } from "Stores/SilenceFormStore";
 import { SilenceComment } from "./SilenceComment";
 import { SilenceDetails } from "./SilenceDetails";
+import { Settings } from "Stores/Settings";
 
 const GetAlertmanager = (
   alertStore: AlertStore,
@@ -24,6 +25,7 @@ const ManagedSilence: FC<{
   isOpen?: boolean;
   onDidUpdate?: () => void;
   isNested?: boolean;
+  settingsStore: Settings;
 }> = ({
   cluster,
   alertCount,
@@ -34,6 +36,7 @@ const ManagedSilence: FC<{
   isOpen = false,
   onDidUpdate,
   isNested = false,
+  settingsStore,
 }) => {
   useEffect(() => {
     if (onDidUpdate) onDidUpdate();
@@ -61,6 +64,7 @@ const ManagedSilence: FC<{
           alertCountAlwaysVisible={alertCountAlwaysVisible}
           collapsed={!showDetails}
           collapseToggle={() => setShowDetails(!showDetails)}
+          settingsStore={settingsStore}
         />
       </div>
       {showDetails ? (

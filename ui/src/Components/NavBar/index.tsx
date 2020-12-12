@@ -108,7 +108,10 @@ const NavBar: FC<{
         >
           <span className="navbar-nav float-left d-flex flex-row">
             <span className="navbar-brand p-0 my-0 mx-2 h1 d-none d-sm-block">
-              <OverviewModal alertStore={alertStore} />
+              <OverviewModal
+                alertStore={alertStore}
+                settingsStore={settingsStore}
+              />
             </span>
             <Fetcher alertStore={alertStore} settingsStore={settingsStore} />
           </span>

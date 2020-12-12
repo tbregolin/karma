@@ -66,7 +66,9 @@ const Grid: FC<{
     // left click       => toggle current grid
     // left click + alt => toggle all grids
 
-    if (event.altKey === true) {
+    if (
+      event[settingsStore.labelHidingConfig.config.labelHidingModKey] === true
+    ) {
       const toggleEvent = new CustomEvent("alertGridCollapse", {
         detail: !isExpanded,
       });
@@ -130,6 +132,7 @@ const Grid: FC<{
           grid={grid}
           isExpanded={isExpanded}
           onToggle={onCollapseClick}
+          settingsStore={settingsStore}
         />
       </CSSTransition>
       <div

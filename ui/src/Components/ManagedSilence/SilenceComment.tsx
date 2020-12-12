@@ -9,6 +9,7 @@ import { AlertStore } from "Stores/AlertStore";
 import FilteringCounterBadge from "Components/Labels/FilteringCounterBadge";
 import { ToggleIcon } from "Components/ToggleIcon";
 import { SilenceProgress } from "./SilenceProgress";
+import { Settings } from "Stores/Settings";
 
 const SilenceComment: FC<{
   cluster: string;
@@ -18,6 +19,7 @@ const SilenceComment: FC<{
   collapseToggle: () => void;
   alertStore: AlertStore;
   alertCountAlwaysVisible?: boolean;
+  settingsStore: Settings;
 }> = ({
   cluster,
   silence,
@@ -26,6 +28,7 @@ const SilenceComment: FC<{
   collapsed,
   collapseToggle,
   alertStore,
+  settingsStore,
 }) => {
   const comment = silence.ticketURL ? (
     <a
@@ -86,6 +89,7 @@ const SilenceComment: FC<{
               alwaysVisible={alertCountAlwaysVisible}
               defaultColor="primary"
               isAppend={false}
+              settingsStore={settingsStore}
             />
             <span className="badge components-label with-click">
               <ToggleIcon

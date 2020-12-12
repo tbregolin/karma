@@ -16,6 +16,7 @@ import { InhibitedByModal } from "Components/InhibitedByModal";
 import { RenderNonLinkAnnotation, RenderLinkAnnotation } from "../Annotation";
 import { AlertMenu } from "./AlertMenu";
 import { RenderSilence } from "../Silences";
+import { Settings } from "Stores/Settings";
 
 const Alert: FC<{
   group: APIAlertGroupT;
@@ -27,6 +28,7 @@ const Alert: FC<{
   alertStore: AlertStore;
   silenceFormStore: SilenceFormStore;
   setIsMenuOpen: (isOpen: boolean) => void;
+  settingsStore: Settings;
 }> = ({
   group,
   alert,
@@ -37,6 +39,7 @@ const Alert: FC<{
   alertStore,
   silenceFormStore,
   setIsMenuOpen,
+  settingsStore,
 }) => {
   const classNames = [
     "components-grid-alertgrid-alertgroup-alert",
@@ -115,6 +118,7 @@ const Alert: FC<{
           name={name}
           value={value}
           alertStore={alertStore}
+          settingsStore={settingsStore}
         />
       ))}
       {showAlertmanagers
@@ -124,6 +128,7 @@ const Alert: FC<{
               name={StaticLabels.AlertmanagerCluster}
               value={cluster}
               alertStore={alertStore}
+              settingsStore={settingsStore}
             />
           ))
         : null}
@@ -132,6 +137,7 @@ const Alert: FC<{
           name={StaticLabels.Receiver}
           value={alert.receiver}
           alertStore={alertStore}
+          settingsStore={settingsStore}
         />
       ) : null}
       {alert.annotations
@@ -148,6 +154,7 @@ const Alert: FC<{
             afterUpdate={afterUpdate}
             cluster={cluster}
             silenceID={silenceID}
+            settingsStore={settingsStore}
           />
         ))
       )}

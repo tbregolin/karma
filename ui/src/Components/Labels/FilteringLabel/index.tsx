@@ -6,24 +6,33 @@ import { AlertStore } from "Stores/AlertStore";
 import { QueryOperators, FormatQuery } from "Common/Query";
 import { TooltipWrapper } from "Components/TooltipWrapper";
 import { GetClassAndStyle } from "Components/Labels/Utils";
+import { Settings } from "Stores/Settings";
 
 const FilteringLabel: FC<{
   alertStore: AlertStore;
   name: string;
   value: string;
-}> = ({ alertStore, name, value }) => {
+  settingsStore: Settings;
+}> = ({ alertStore, name, value, settingsStore }) => {
   const handleClick = useCallback(
     (event: MouseEvent) => {
       // left click       => apply foo=bar filter
       // left click + alt => apply foo!=bar filter
       const operator =
-        event.altKey === true ? QueryOperators.NotEqual : QueryOperators.Equal;
+        event[settingsStore.labelHidingConfig.config.labelHidingModKey] === true
+          ? QueryOperators.NotEqual
+          : QueryOperators.Equal;
 
       event.preventDefault();
 
       alertStore.filters.addFilter(FormatQuery(name, operator, value));
     },
-    [alertStore.filters, name, value]
+    [
+      alertStore.filters,
+      name,
+      value,
+      settingsStore.labelHidingConfig.config.labelHidingModKey,
+    ]
   );
 
   const cs = GetClassAndStyle(

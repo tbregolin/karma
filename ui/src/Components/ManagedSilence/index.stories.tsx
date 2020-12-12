@@ -6,6 +6,7 @@ import { MockSilence } from "__fixtures__/Alerts";
 import { AlertStore } from "Stores/AlertStore";
 import { SilenceFormStore } from "Stores/SilenceFormStore";
 import { ManagedSilence } from ".";
+import { Settings } from "Stores/Settings";
 
 import "Styles/Percy.scss";
 
@@ -21,6 +22,7 @@ storiesOf("ManagedSilence", module)
     const alertStore = new AlertStore([]);
     const silenceFormStore = new SilenceFormStore();
     const cluster = "am";
+    const settingsStore = new Settings(null);
 
     alertStore.data.setUpstreams({
       counters: { healthy: 1, failed: 0, total: 1 },
@@ -79,6 +81,7 @@ storiesOf("ManagedSilence", module)
           alertStore={alertStore}
           silenceFormStore={silenceFormStore}
           onDidUpdate={() => {}}
+          settingsStore={settingsStore}
         />
         <ManagedSilence
           cluster={cluster}
@@ -89,6 +92,7 @@ storiesOf("ManagedSilence", module)
           silenceFormStore={silenceFormStore}
           onDidUpdate={() => {}}
           isOpen={true}
+          settingsStore={settingsStore}
         />
         <ManagedSilence
           cluster={"ro"}
@@ -99,6 +103,7 @@ storiesOf("ManagedSilence", module)
           silenceFormStore={silenceFormStore}
           onDidUpdate={() => {}}
           isOpen={true}
+          settingsStore={settingsStore}
         />
         <ManagedSilence
           cluster={cluster}
@@ -108,6 +113,7 @@ storiesOf("ManagedSilence", module)
           alertStore={alertStore}
           silenceFormStore={silenceFormStore}
           onDidUpdate={() => {}}
+          settingsStore={settingsStore}
         />
         <ManagedSilence
           cluster={cluster}
@@ -118,6 +124,7 @@ storiesOf("ManagedSilence", module)
           silenceFormStore={silenceFormStore}
           onDidUpdate={() => {}}
           isOpen={true}
+          settingsStore={settingsStore}
         />
         <ManagedSilence
           cluster={"ro"}
@@ -128,6 +135,7 @@ storiesOf("ManagedSilence", module)
           silenceFormStore={silenceFormStore}
           onDidUpdate={() => {}}
           isOpen={true}
+          settingsStore={settingsStore}
         />
       </React.Fragment>
     );

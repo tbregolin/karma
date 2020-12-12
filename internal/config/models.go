@@ -173,5 +173,6 @@ type configSchema struct {
 		CollapseGroups       string `yaml:"collapseGroups" koanf:"collapseGroups"`
 		MultiGridLabel       string `yaml:"multiGridLabel" koanf:"multiGridLabel"`
 		MultiGridSortReverse bool   `yaml:"multiGridSortReverse" koanf:"multiGridSortReverse"`
+		LabelHidingModKey    bool   `yaml:"labelHidingModKey" koanf:"labelHidingModKey"`
 	}
 }

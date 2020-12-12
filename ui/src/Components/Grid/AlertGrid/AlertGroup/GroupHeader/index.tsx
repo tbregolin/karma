@@ -11,6 +11,7 @@ import { TooltipWrapper } from "Components/TooltipWrapper";
 import { AlertAck } from "Components/AlertAck";
 import { ToggleIcon } from "Components/ToggleIcon";
 import { GroupMenu } from "./GroupMenu";
+import { Settings } from "Stores/Settings";
 
 const GroupHeader: FC<{
   isCollapsed: boolean;
@@ -21,6 +22,7 @@ const GroupHeader: FC<{
   themedCounters: boolean;
   setIsMenuOpen: (isOpen: boolean) => void;
   gridLabelValue: string;
+  settingsStore: Settings;
 }> = ({
   isCollapsed,
   setIsCollapsed,
@@ -30,13 +32,16 @@ const GroupHeader: FC<{
   themedCounters,
   setIsMenuOpen,
   gridLabelValue,
+  settingsStore,
 }) => {
   const onCollapseClick = (event: MouseEvent) => {
     // left click       => toggle current group
     // left click + alt => toggle all groups
     setIsCollapsed(!isCollapsed);
 
-    if (event.altKey === true) {
+    if (
+      event[settingsStore.labelHidingConfig.config.labelHidingModKey] === true
+    ) {
       const toggleEvent = new CustomEvent("alertGroupCollapse", {
         detail: {
           gridLabelValue: gridLabelValue,
@@ -69,6 +74,7 @@ const GroupHeader: FC<{
             name={name}
             value={group.labels[name]}
             alertStore={alertStore}
+            settingsStore={settingsStore}
           />
         ))}
       </span>
@@ -86,6 +92,7 @@ const GroupHeader: FC<{
           counter={group.stateCount.unprocessed}
           themed={themedCounters}
           alertStore={alertStore}
+          settingsStore={settingsStore}
         />
         <FilteringCounterBadge
           name="@state"
@@ -93,6 +100,7 @@ const GroupHeader: FC<{
           counter={group.stateCount.suppressed}
           themed={themedCounters}
           alertStore={alertStore}
+          settingsStore={settingsStore}
         />
         <FilteringCounterBadge
           name="@state"
@@ -100,6 +108,7 @@ const GroupHeader: FC<{
           counter={group.stateCount.active}
           themed={themedCounters}
           alertStore={alertStore}
+          settingsStore={settingsStore}
         />
         <span
           className={`${

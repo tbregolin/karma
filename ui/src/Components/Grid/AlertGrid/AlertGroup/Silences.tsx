@@ -4,6 +4,7 @@ import { APISilenceT } from "Models/APITypes";
 import { AlertStore } from "Stores/AlertStore";
 import { SilenceFormStore } from "Stores/SilenceFormStore";
 import { ManagedSilence } from "Components/ManagedSilence";
+import { Settings } from "Stores/Settings";
 
 const FallbackSilenceDesciption: FC<{
   silenceID: string;
@@ -36,8 +37,16 @@ const RenderSilence: FC<{
   afterUpdate: () => void;
   cluster: string;
   silenceID: string;
+  settingsStore: Settings;
 }> = memo(
-  ({ alertStore, silenceFormStore, afterUpdate, cluster, silenceID }) => {
+  ({
+    alertStore,
+    silenceFormStore,
+    afterUpdate,
+    cluster,
+    silenceID,
+    settingsStore,
+  }) => {
     const silence = GetSilenceFromStore(alertStore, cluster, silenceID);
 
     if (silence === null) {
@@ -59,6 +68,7 @@ const RenderSilence: FC<{
         alertStore={alertStore}
         silenceFormStore={silenceFormStore}
         onDidUpdate={afterUpdate}
+        settingsStore={settingsStore}
       />
     );
   },

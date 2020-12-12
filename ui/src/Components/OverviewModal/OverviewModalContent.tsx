@@ -7,11 +7,13 @@ import { AlertStore } from "Stores/AlertStore";
 import { TooltipWrapper } from "Components/TooltipWrapper";
 import LabelWithPercent from "Components/Labels/LabelWithPercent";
 import { ToggleIcon } from "Components/ToggleIcon";
+import { Settings } from "Stores/Settings";
 
 const TableRows: FC<{
   alertStore: AlertStore;
   nameStats: APILabelCounterT[];
-}> = observer(({ alertStore, nameStats }) => (
+  settingsStore: Settings;
+}> = observer(({ alertStore, nameStats, settingsStore }) => (
   <React.Fragment>
     {nameStats.map((nameStats) => (
       <tr key={nameStats.name}>
@@ -38,6 +40,7 @@ const TableRows: FC<{
                   (f) => f.raw === valueStats.raw
                 ).length > 0
               }
+              settingsStore={settingsStore}
             />
           ))}
           {nameStats.values.length > 9 ? (
@@ -55,47 +58,52 @@ const LabelsTable: FC<{
   alertStore: AlertStore;
   showAllLabels: boolean;
   toggleAllLabels: () => void;
-}> = observer(({ alertStore, showAllLabels, toggleAllLabels }) => (
-  <React.Fragment>
-    <table
-      className="table table-borderless top-labels"
-      style={{ tableLayout: "fixed" }}
-    >
-      <tbody className="mw-100">
-        <TableRows
-          alertStore={alertStore}
-          nameStats={alertStore.data.counters.filter(
-            (nameStats) => nameStats.hits >= alertStore.info.totalAlerts
-          )}
-        ></TableRows>
-        {alertStore.data.counters.filter(
-          (nameStats) => nameStats.hits < alertStore.info.totalAlerts
-        ).length > 0 ? (
-          <tr>
-            <td colSpan={2} className="px-1 py-0">
-              <TooltipWrapper title="Toggle all / only common labels">
-                <span
-                  className="badge components-label cursor-pointer with-click"
-                  onClick={toggleAllLabels}
-                >
-                  <ToggleIcon isOpen={showAllLabels} className="text-muted" />
-                </span>
-              </TooltipWrapper>
-            </td>
-          </tr>
-        ) : null}
-        {showAllLabels ? (
+  settingsStore: Settings;
+}> = observer(
+  ({ alertStore, showAllLabels, toggleAllLabels, settingsStore }) => (
+    <React.Fragment>
+      <table
+        className="table table-borderless top-labels"
+        style={{ tableLayout: "fixed" }}
+      >
+        <tbody className="mw-100">
           <TableRows
             alertStore={alertStore}
             nameStats={alertStore.data.counters.filter(
-              (nameStats) => nameStats.hits < alertStore.info.totalAlerts
+              (nameStats) => nameStats.hits >= alertStore.info.totalAlerts
             )}
+            settingsStore={settingsStore}
           ></TableRows>
-        ) : null}
-      </tbody>
-    </table>
-  </React.Fragment>
-));
+          {alertStore.data.counters.filter(
+            (nameStats) => nameStats.hits < alertStore.info.totalAlerts
+          ).length > 0 ? (
+            <tr>
+              <td colSpan={2} className="px-1 py-0">
+                <TooltipWrapper title="Toggle all / only common labels">
+                  <span
+                    className="badge components-label cursor-pointer with-click"
+                    onClick={toggleAllLabels}
+                  >
+                    <ToggleIcon isOpen={showAllLabels} className="text-muted" />
+                  </span>
+                </TooltipWrapper>
+              </td>
+            </tr>
+          ) : null}
+          {showAllLabels ? (
+            <TableRows
+              alertStore={alertStore}
+              nameStats={alertStore.data.counters.filter(
+                (nameStats) => nameStats.hits < alertStore.info.totalAlerts
+              )}
+              settingsStore={settingsStore}
+            ></TableRows>
+          ) : null}
+        </tbody>
+      </table>
+    </React.Fragment>
+  )
+);
 
 const NothingToShow: FC = () => (
   <div className="jumbotron bg-transparent">
@@ -108,7 +116,8 @@ const NothingToShow: FC = () => (
 const OverviewModalContent: FC<{
   alertStore: AlertStore;
   onHide: () => void;
-}> = observer(({ alertStore, onHide }) => {
+  settingsStore: Settings;
+}> = observer(({ alertStore, onHide, settingsStore }) => {
   const [showAllLabels, setShowAllLabels] = useState<boolean>(false);
   return (
     <React.Fragment>
@@ -126,6 +135,7 @@ const OverviewModalContent: FC<{
             alertStore={alertStore}
             showAllLabels={showAllLabels}
             toggleAllLabels={() => setShowAllLabels(!showAllLabels)}
+            settingsStore={settingsStore}
           />
         )}
       </div>

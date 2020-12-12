@@ -256,6 +256,30 @@ class MultiGridConfig {
   }
 }
 
+export type LabelHidingModKeyT = "altKey" | "ctrlKey";
+interface LabelHidingConfigStorage {
+  labelHidingModKey: LabelHidingModKeyT;
+}
+class LabelHidingConfig {
+  options = Object.freeze({
+    altKey: { label: "Alt + Left Click", value: "altKey" },
+    ctrlKey: { label: "Ctrl + Left Click", value: "ctrlKey" },
+  });
+
+  config: LabelHidingConfigStorage;
+  setLabelHidingModKey: (k: LabelHidingModKeyT) => void;
+
+  constructor(k: string) {
+    this.config = localStored("labelHidingConfig", {
+      labelHidingModKey: k,
+    });
+
+    this.setLabelHidingModKey = action((k: LabelHidingModKeyT) => {
+      this.config.labelHidingModKey = k;
+    });
+  }
+}
+
 class Settings {
   savedFilters: SavedFilters;
   fetchConfig: FetchConfig;
@@ -265,6 +289,7 @@ class Settings {
   filterBarConfig: FilterBarConfig;
   themeConfig: ThemeConfig;
   multiGridConfig: MultiGridConfig;
+  labelHidingConfig: LabelHidingConfig;
 
   constructor(defaults: UIDefaults | null | undefined) {
     let defaultSettings: UIDefaults;
@@ -280,6 +305,7 @@ class Settings {
         CollapseGroups: "collapsedOnMobile",
         MultiGridLabel: "",
         MultiGridSortReverse: false,
+        LabelHidingModKey: "altKey",
       };
     } else {
       defaultSettings = defaults;
@@ -306,6 +332,9 @@ class Settings {
     this.multiGridConfig = new MultiGridConfig(
       defaultSettings.MultiGridLabel,
       defaultSettings.MultiGridSortReverse
+    );
+    this.labelHidingConfig = new LabelHidingConfig(
+      defaultSettings.LabelHidingModKey
     );
   }
 }

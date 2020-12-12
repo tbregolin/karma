@@ -11,6 +11,7 @@ import { AlertStore } from "Stores/AlertStore";
 import { useFlashTransition } from "Hooks/useFlashTransition";
 import { TooltipWrapper } from "Components/TooltipWrapper";
 import { Modal } from "Components/Modal";
+import { Settings } from "Stores/Settings";
 
 // https://github.com/facebook/react/issues/14603
 const OverviewModalContent = React.lazy(() =>
@@ -21,7 +22,8 @@ const OverviewModalContent = React.lazy(() =>
 
 const OverviewModal: FC<{
   alertStore: AlertStore;
-}> = observer(({ alertStore }) => {
+  settingsStore: Settings;
+}> = observer(({ alertStore, settingsStore }) => {
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const toggle = useCallback(() => setIsVisible(!isVisible), [isVisible]);
@@ -54,6 +56,7 @@ const OverviewModal: FC<{
           <OverviewModalContent
             alertStore={alertStore}
             onHide={() => setIsVisible(false)}
+            settingsStore={settingsStore}
           />
         </React.Suspense>
       </Modal>

@@ -4,6 +4,7 @@ import { Settings } from "Stores/Settings";
 import { Accordion } from "Components/Accordion";
 import { FetchConfiguration } from "./FetchConfiguration";
 import { FilterBarConfiguration } from "./FilterBarConfiguration";
+import { LabelHidingConfiguration } from "./LabelHidingConfiguration";
 import { AlertGroupConfiguration } from "./AlertGroupConfiguration";
 import { AlertGroupWidthConfiguration } from "./AlertGroupWidthConfiguration";
 import { AlertGroupSortConfiguration } from "./AlertGroupSortConfiguration";
@@ -26,6 +27,11 @@ const Configuration: FC<{
     <Accordion
       text="Filter bar configuration"
       content={<FilterBarConfiguration settingsStore={settingsStore} />}
+      defaultIsOpen={defaultIsOpen}
+    />
+    <Accordion
+      text="Label hiding key binding"
+      content={<LabelHidingConfiguration settingsStore={settingsStore} />}
       defaultIsOpen={defaultIsOpen}
     />
     <Accordion

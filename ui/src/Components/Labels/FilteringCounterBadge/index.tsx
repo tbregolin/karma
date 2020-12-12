@@ -9,6 +9,7 @@ import { QueryOperators, FormatQuery } from "Common/Query";
 import { TooltipWrapper } from "Components/TooltipWrapper";
 import { GetClassAndStyle } from "Components/Labels/Utils";
 import { useFlashTransition } from "Hooks/useFlashTransition";
+import { Settings } from "Stores/Settings";
 
 // Same as FilteringLabel but for labels that are counters (usually @state)
 // and only renders a pill badge with the counter, it doesn't render anything
@@ -22,6 +23,7 @@ const FilteringCounterBadge: FC<{
   alwaysVisible?: boolean;
   defaultColor?: "light" | "primary";
   isAppend?: boolean;
+  settingsStore: Settings;
 }> = ({
   alertStore,
   name,
@@ -31,6 +33,7 @@ const FilteringCounterBadge: FC<{
   alwaysVisible = false,
   defaultColor = "light",
   isAppend = true,
+  settingsStore,
 }) => {
   const { ref, props } = useFlashTransition(counter);
 
@@ -39,7 +42,9 @@ const FilteringCounterBadge: FC<{
       // left click       => apply foo=bar filter
       // left click + alt => apply foo!=bar filter
       const operator =
-        event.altKey === true ? QueryOperators.NotEqual : QueryOperators.Equal;
+        event[settingsStore.labelHidingConfig.config.labelHidingModKey] === true
+          ? QueryOperators.NotEqual
+          : QueryOperators.Equal;
 
       event.preventDefault();
 
@@ -49,7 +54,13 @@ const FilteringCounterBadge: FC<{
         alertStore.filters.setFilters([FormatQuery(name, operator, value)]);
       }
     },
-    [alertStore.filters, name, value, isAppend]
+    [
+      alertStore.filters,
+      name,
+      value,
+      isAppend,
+      settingsStore.labelHidingConfig.config.labelHidingModKey,
+    ]
   );
 
   if (!alwaysVisible && counter === 0) return null;

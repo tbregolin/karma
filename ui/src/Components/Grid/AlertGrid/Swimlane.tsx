@@ -9,13 +9,15 @@ import FilteringLabel from "Components/Labels/FilteringLabel";
 import FilteringCounterBadge from "Components/Labels/FilteringCounterBadge";
 import { TooltipWrapper } from "Components/TooltipWrapper";
 import { ToggleIcon } from "Components/ToggleIcon";
+import { Settings } from "Stores/Settings";
 
 const Swimlane: FC<{
   alertStore: AlertStore;
   grid: APIGridT;
   isExpanded: boolean;
   onToggle: (event: MouseEvent) => void;
-}> = ({ alertStore, grid, isExpanded, onToggle }) => {
+  settingsStore: Settings;
+}> = ({ alertStore, grid, isExpanded, onToggle, settingsStore }) => {
   return (
     <h5 className="components-grid-swimlane d-flex flex-row justify-content-between rounded px-2 py-1 mt-2 mb-0 border border-dark">
       <span className="flex-shrink-0 flex-grow-0">
@@ -30,6 +32,7 @@ const Swimlane: FC<{
             name={grid.labelName}
             value={grid.labelValue}
             alertStore={alertStore}
+            settingsStore={settingsStore}
           />
         )}
       </span>
@@ -40,6 +43,7 @@ const Swimlane: FC<{
           counter={grid.stateCount.unprocessed}
           themed={true}
           alertStore={alertStore}
+          settingsStore={settingsStore}
         />
         <FilteringCounterBadge
           name="@state"
@@ -47,6 +51,7 @@ const Swimlane: FC<{
           counter={grid.stateCount.suppressed}
           themed={true}
           alertStore={alertStore}
+          settingsStore={settingsStore}
         />
         <FilteringCounterBadge
           name="@state"
@@ -54,6 +59,7 @@ const Swimlane: FC<{
           counter={grid.stateCount.active}
           themed={true}
           alertStore={alertStore}
+          settingsStore={settingsStore}
         />
         <span
           className="text-muted cursor-pointer badge with-click with-click-dark components-label ml-2 mr-1"

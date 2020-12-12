@@ -13,6 +13,7 @@ const DefaultsObject: UIDefaults = {
   CollapseGroups: "expanded",
   MultiGridLabel: "",
   MultiGridSortReverse: false,
+  LabelHidingModKey: "altKey",
 };
 
 export { DefaultsBase64, DefaultsObject };

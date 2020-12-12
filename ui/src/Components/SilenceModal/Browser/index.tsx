@@ -165,6 +165,7 @@ const Browser: FC<{
                     alertStore={alertStore}
                     silenceFormStore={silenceFormStore}
                     isNested={true}
+                    settingsStore={settingsStore}
                   />
                 </CSSTransition>
               ))}

@@ -2,6 +2,8 @@ export type ThemeT = "light" | "dark" | "auto";
 
 export type CollapseGroupsT = "expanded" | "collapsed" | "collapsedOnMobile";
 
+export type LabelHidingModKeyT = "altKey" | "ctrlKey";
+
 export interface UIDefaults {
   Refresh: number;
   HideFiltersWhenIdle: boolean;
@@ -13,4 +15,5 @@ export interface UIDefaults {
   CollapseGroups: CollapseGroupsT;
   MultiGridLabel: string;
   MultiGridSortReverse: boolean;
+  LabelHidingModKey: string;
 }
